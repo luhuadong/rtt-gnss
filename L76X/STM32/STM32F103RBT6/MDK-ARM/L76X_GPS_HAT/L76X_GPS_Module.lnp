@@ -1,0 +1,27 @@
+--cpu Cortex-M3
+"l76x_gps_hat\startup_stm32f103xb.o"
+"l76x_gps_hat\dev_config.o"
+"l76x_gps_hat\l76x.o"
+"l76x_gps_hat\main.o"
+"l76x_gps_hat\gpio.o"
+"l76x_gps_hat\usart.o"
+"l76x_gps_hat\stm32f1xx_it.o"
+"l76x_gps_hat\stm32f1xx_hal_msp.o"
+"l76x_gps_hat\stm32f1xx_hal_gpio_ex.o"
+"l76x_gps_hat\stm32f1xx_hal_tim.o"
+"l76x_gps_hat\stm32f1xx_hal_tim_ex.o"
+"l76x_gps_hat\stm32f1xx_hal_uart.o"
+"l76x_gps_hat\stm32f1xx_hal.o"
+"l76x_gps_hat\stm32f1xx_hal_rcc.o"
+"l76x_gps_hat\stm32f1xx_hal_rcc_ex.o"
+"l76x_gps_hat\stm32f1xx_hal_gpio.o"
+"l76x_gps_hat\stm32f1xx_hal_dma.o"
+"l76x_gps_hat\stm32f1xx_hal_cortex.o"
+"l76x_gps_hat\stm32f1xx_hal_pwr.o"
+"l76x_gps_hat\stm32f1xx_hal_flash.o"
+"l76x_gps_hat\stm32f1xx_hal_flash_ex.o"
+"l76x_gps_hat\system_stm32f1xx.o"
+--library_type=microlib --strict --scatter "L76X_GPS_HAT\L76X_GPS_Module.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "L76X_GPS_Module.map" -o L76X_GPS_HAT\L76X_GPS_Module.axf
