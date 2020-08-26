@@ -32,7 +32,7 @@ function:
 ******************************************************************************/
 static double transformLon(double x,double y)
 {
-	double ret = 300.0 + x + 2.0 * y + 0.1 * x * x + 0.1 * x * y + 0.1 * sqrt(abs(x));
+    double ret = 300.0 + x + 2.0 * y + 0.1 * x * x + 0.1 * x * y + 0.1 * sqrt(abs(x));
     ret += (20.0 * sin(6.0 * x * pi) + 20.0 * sin(2.0 * x * pi)) * 2.0 / 3.0;
     ret += (20.0 * sin(x * pi) + 40.0 * sin(x / 3.0 * pi)) * 2.0 / 3.0;
     ret += (150.0 * sin(x / 12.0 * pi) + 300.0 * sin(x / 30.0 * pi)) * 2.0 / 3.0;
@@ -45,13 +45,13 @@ function:
 ******************************************************************************/
 static Coordinates bd_encrypt(Coordinates gg)
 {
-	Coordinates bd;
+    Coordinates bd;
     double x = gg.Lon, y = gg.Lat;
-	double z = sqrt(x * x + y * y) + 0.00002 * sin(y * x_pi);
-	double theta = atan2(y, x) + 0.000003 * cos(x * x_pi);
-	bd.Lon = z * cos(theta) + 0.0065;
-	bd.Lat = z * sin(theta) + 0.006;
-	return bd;
+    double z = sqrt(x * x + y * y) + 0.00002 * sin(y * x_pi);
+    double theta = atan2(y, x) + 0.000003 * cos(x * x_pi);
+    bd.Lon = z * cos(theta) + 0.0065;
+    bd.Lat = z * sin(theta) + 0.006;
+    return bd;
 }
 
 /******************************************************************************
@@ -60,7 +60,7 @@ function:
 ******************************************************************************/
 static Coordinates transform(Coordinates gps)
 {
-	Coordinates gg;
+    Coordinates gg;
     double dLat = transformLat(gps.Lon - 105.0, gps.Lat - 35.0);
     double dLon = transformLon(gps.Lon - 105.0, gps.Lat - 35.0);
     double radLat = gps.Lat / 180.0 * pi;
@@ -71,7 +71,7 @@ static Coordinates transform(Coordinates gps)
     dLon = (dLon * 180.0) / (a / sqrtMagic * cos(radLat) * pi);
     gg.Lat = gps.Lat + dLat;
     gg.Lon = gps.Lon + dLon;
-	return gg;
+    return gg;
 }
 
 /******************************************************************************
@@ -95,14 +95,14 @@ void L76X_Send_Command(char *data)
     //printf(" i = %d Check =%x \n", i, Check);
     Check_char[0] = Temp[Check/16%16];
     Check_char[1] = Temp[Check%16];
-		Check_char[2] = '\0';
+    Check_char[2] = '\0';
    
 
     DEV_Uart_SendString(data);
     DEV_Uart_SendByte('*');
     DEV_Uart_SendString(Check_char);
-		DEV_Uart_SendByte('\r');
-		DEV_Uart_SendByte('\n');
+    DEV_Uart_SendByte('\r');
+    DEV_Uart_SendByte('\n');
 }
 
 void L76X_Exit_BackupMode()
@@ -126,11 +126,11 @@ GNRMC L76X_Gat_GNRMC()
     UDOUBLE Time = 0, latitude = 0, longitude = 0;
 
     GPS.Status = 0;
-
-		GPS.Time_H = 0;
+    
+    GPS.Time_H = 0;
     GPS.Time_M = 0;
     GPS.Time_S = 0;
-	
+
     DEV_Uart_ReceiveString(buff_t, BUFFSIZE);
      Serial.print(buff_t);
     add = 0; 
@@ -158,8 +158,8 @@ GNRMC L76X_Gat_GNRMC()
                         GPS.Time_H = Time/10000+8;
                         GPS.Time_M = Time/100%100;
                         GPS.Time_S = Time%100;
-												if(GPS.Time_H >= 24)
-													GPS.Time_H = GPS.Time_H - 24;
+                        if(GPS.Time_H >= 24)
+                            GPS.Time_H = GPS.Time_H - 24;
                     }else if(x == 2){
                      //A indicates that it has been positioned
                      //V indicates that there is no positioning.
@@ -205,7 +205,7 @@ GNRMC L76X_Gat_GNRMC()
         }
         if(buff_t[add+5] == '\0'){
             add = 0;
-						break;
+            break;
         }
         add++;
         if(add > BUFFSIZE){
