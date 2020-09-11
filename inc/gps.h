@@ -17,6 +17,25 @@
 
 #define GPSLIB_VERSION       "0.0.1"
 
+struct gnrmc
+{
+	double     lon;      /* GPS longitude and latitude */
+	double     lat;
+    char       lon_area;
+    char       lat_area;
+    rt_uint8_t time_H;   /* Time */
+    rt_uint8_t time_M;
+    rt_uint8_t time_S;
+    rt_uint8_t status;   /* 1: Successful positioning, 0：Positioning failed */
+};
+typedef struct gnrmc GNRMC_t;
+
+struct coord
+{
+    double lon;
+    double lat;
+};
+typedef struct coord coord_t;
 
 struct gps_response
 {
@@ -47,8 +66,11 @@ typedef struct gps_device *gps_device_t;
 gps_device_t gps_create(const char *uart_name);
 void         gps_delete(gps_device_t dev);
 
+rt_err_t     gps_send_command(gps_device_t dev, const char *data);
 rt_uint16_t  gps_read(gps_device_t dev, void *buf, rt_uint16_t size, rt_int32_t time);
 rt_uint16_t  gps_wait(gps_device_t dev, void *buf, rt_uint16_t size);
+GNRMC_t      gps_gat_gnrmc(gps_device_t dev);
+
 rt_bool_t    gps_is_ready(gps_device_t dev);
 
 void         gps_show_response(gps_response_t resp);

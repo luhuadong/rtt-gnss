@@ -7,7 +7,7 @@ cwd   = GetCurrentDir()
 # add gps src files.
 if GetDepend('PKG_USING_GPS'):
     src += Glob('src/gps.c')
-    src += Glob('src/sensor_unknown_gps.c')
+    src += Glob('src/sensor_nmea_gps.c')
 
 if GetDepend('PKG_USING_GPS_SAMPLE'):
     src += Glob('examples/gps_sample.c')

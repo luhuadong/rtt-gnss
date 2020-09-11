@@ -1,3 +1,3 @@
-# rtt-gnss
+# rtt-gps
 
-GNSS/GPS packages for RT-Thread, support NMEA-0183 specification.
+GPS/GNSS packages for RT-Thread, support NMEA-0183 specification.
