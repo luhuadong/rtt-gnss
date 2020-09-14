@@ -166,6 +166,8 @@ gps_device_t gps_create(const char *uart_name)
     /* Dangerous? */
     dev->serial->user_data = (void *)dev;
 
+    //dev->rx_fifo = rt_ringbuffer_create(AT_CLI_FIFO_SIZE);
+
     dev->ack  = rt_sem_create("gps_ack", 0, RT_IPC_FLAG_FIFO);
     if (dev->ack == RT_NULL)
     {

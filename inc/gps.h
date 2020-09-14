@@ -17,6 +17,8 @@
 
 #define GPSLIB_VERSION       "0.0.1"
 
+#define GPS_READ_WAIT_TIME   10000
+
 struct gnrmc
 {
 	double     lon;      /* GPS longitude and latitude */
@@ -37,6 +39,13 @@ struct coord
 };
 typedef struct coord coord_t;
 
+struct dms
+{
+    int degrees;
+    int minutes;
+    int seconds;
+};
+
 struct gps_response
 {
 
@@ -46,6 +55,8 @@ typedef struct gps_response *gps_response_t;
 struct gps_device
 {
     rt_device_t  serial;
+    struct rt_ringbuffer *rx_fifo;
+
 #ifdef PKG_USING_GPS_UART_DMA
     rt_mailbox_t rx_mb;
 #else
@@ -62,6 +73,29 @@ struct gps_device
 };
 typedef struct gps_device *gps_device_t;
 
+struct gps_client
+{
+    rt_device_t  device;
+
+    gps_status_t status;
+    char end_sign;
+
+    /* the current received one line data buffer */
+    char *recv_line_buf;
+    /* The length of the currently received one line data */
+    rt_size_t recv_line_len;
+    /* The maximum supported receive data length */
+    rt_size_t recv_bufsz;
+    rt_sem_t rx_notice;
+    rt_mutex_t lock;
+
+    rt_sem_t resp_notice;
+    rt_size_t urc_table_size;
+
+    rt_thread_t parser;
+};
+typedef struct gps_client *gps_client_t;
+
 
 gps_device_t gps_create(const char *uart_name);
 void         gps_delete(gps_device_t dev);
@@ -75,6 +109,8 @@ rt_bool_t    gps_is_ready(gps_device_t dev);
 
 void         gps_show_response(gps_response_t resp);
 void         gps_dump(const char *buf, rt_uint16_t size);
+
+double       dms2decimal(struct dms);
 
 rt_err_t rt_hw_gps_init(const char *name, struct rt_sensor_config *cfg);
 

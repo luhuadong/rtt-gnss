@@ -9,7 +9,7 @@
  */
 
 #include <board.h>
-#include "pmsxx.h"
+#include "gps.h"
 
 #define DBG_TAG "sensor.plantower.pms"
 #define DBG_LVL DBG_INFO
